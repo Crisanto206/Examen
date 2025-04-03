@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Examen para Puppet - Luo Binghe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e0f7fa; /* fondo azul claro estilo médico */
+      padding: 20px;
+    }
+    h1 {
+      color: #00695c; /* verde oscuro médico */
+      text-align: center;
+    }
+    .question {
+      background: #ffffff;
+      border: 2px solid #80cbc4; /* borde verde agua */
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .option {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #b2dfdb;
+      cursor: pointer;
+      background-color: #f1f8e9;
+    }
+    .correct {
+      background-color: #c8e6c9 !important;
+    }
+    .incorrect {
+      background-color: #ffcdd2 !important;
+    }
+    #result {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 30px;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    #nextBtn {
+      background-color: #00796b;
+      color: white;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Examen sorpresa para Puppet 💉🚑</h1>
+  <div id="quiz"></div>
+  <div id="result"></div>
+  <button id="nextBtn" style="display:none">Siguiente pregunta</button>
+
+  <script>
+    const questions = [
+  { q: "¿Cuáles son los principales componentes del sistema óseo?", options: ["Músculos, ligamentos y tendones", "Huesos, cartílagos y articulaciones", "Piel, cabello y uñas", "Células sanguíneas y hormonas"], answer: 1 },
+  { q: "¿Cuántos huesos tiene el esqueleto humano adulto?", options: ["180", "200", "206", "220"], answer: 2 },
+  { q: "¿Qué estructura del esqueleto protege el cerebro?", options: ["Caja torácica", "Columna vertebral", "Cráneo", "Pelvis"], answer: 2 },
+  { q: "¿Qué función cumplen los ligamentos y tendones?", options: ["Producción de calcio", "Almacenamiento de grasas", "Unión de huesos y músculos", "Digestión de proteínas"], answer: 2 },
+  { q: "¿Cuántas son las funciones principales del sistema linfático?", options: ["3", "1", "5"], answer: 0 },
+  { q: "¿Cuál NO es una función del sistema linfático?", options: ["Drenar líquidos", "Transportar grasas", "Transportar glóbulos rojos"], answer: 2 },
+  { q: "¿Qué estructuras se encuentran en los vasos linfáticos?", options: ["Ganglios linfáticos", "Leucocitos", "Linfa"], answer: 0 },
+  { q: "¿Qué líquido recoge el exceso de fluidos del espacio intersticial?", options: ["Linfa", "Agua", "Plasma"], answer: 0 },
+  { q: "¿Qué pasa si no se drena bien la linfa?", options: ["Moretones", "Linfedema", "Linfacitis"], answer: 1 },
+  { q: "¿Qué es el sistema linfático?", options: ["Un sistema de órganos que protege contra enfermedades", "Sirve para bombear sangre", "Sirve para no enfermarse de tos"], answer: 0 },
+  { q: "¿Qué es la linfa?", options: ["Líquido con glóbulos blancos y grasas", "Un aparato médico", "Un medicamento"], answer: 0 },
+  { q: "¿De qué está compuesto el sistema linfático?", options: ["Vasos, ganglios, timo y bazo", "Amígdalas y médula ósea", "Todas las anteriores"], answer: 2 },
+  { q: "¿Cómo se activa el sistema linfático?", options: ["Ejercicio y alimentación saludable", "Presionando un botón", "Ejercicios motrices"], answer: 0 },
+  { q: "¿Qué es el sistema muscular?", options: ["Fibras y tejidos", "Huesos y articulaciones", "Nervios y tendones"], answer: 0 },
+  { q: "¿Cuáles son los músculos cardiacos?", options: ["Músculos del abdomen", "Músculos de las extremidades", "Músculos de la pared del corazón"], answer: 2 },
+  { q: "¿Cuál es una enfermedad de los músculos?", options: ["Artritis", "Desgarros", "Fiebre reumática"], answer: 1 },
+  { q: "¿En qué se divide el sistema nervioso central?", options: ["Encéfalo y Médula Espinal", "Cervical y Torácico", "Cerebro Central y Posterior"], answer: 0 },
+  { q: "¿En qué se divide el sistema nervioso periférico?", options: ["Somático y Autónomo", "Meninges y cuerpo torácico", "Hemisferios"], answer: 0 },
+  { q: "¿Los pares craneales son 12 con funciones sensoriales, motoras y mixtas?", options: ["Falso", "Verdadero"], answer: 1 },
+  { q: "¿El sistema nervioso simpático se activa en emergencias?", options: ["Falso", "Verdadero"], answer: 1 }
+];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let shuffledQuestions = [];
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function showQuestion() {
+      const quizDiv = document.getElementById("quiz");
+      quizDiv.innerHTML = "";
+      const question = shuffledQuestions[currentQuestion];
+      const shuffledOptions = shuffleArray([...question.options]);
+      const correctText = question.options[question.answer];
+      const correctIndex = shuffledOptions.indexOf(correctText);
+
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question";
+      questionDiv.innerHTML = `<h3>${currentQuestion + 1}. ${question.q}</h3>`;
+
+      shuffledOptions.forEach((option, i) => {
+        const optionDiv = document.createElement("div");
+        optionDiv.className = "option";
+        optionDiv.textContent = option;
+        optionDiv.onclick = () => {
+          if (i === correctIndex) {
+            optionDiv.classList.add("correct");
+            score++;
+          } else {
+            optionDiv.classList.add("incorrect");
+          }
+          document.querySelectorAll(".option").forEach(btn => btn.onclick = null);
+          document.getElementById("nextBtn").style.display = "block";
+        };
+        questionDiv.appendChild(optionDiv);
+      });
+
+      quizDiv.appendChild(questionDiv);
+    }
+
+    document.getElementById("nextBtn").onclick = () => {
+      currentQuestion++;
+      if (currentQuestion < shuffledQuestions.length) {
+        showQuestion();
+        document.getElementById("nextBtn").style.display = "none";
+      } else {
+        showResult();
+      }
+    };
+
+    function showResult() {
+      document.getElementById("quiz").innerHTML = "";
+      document.getElementById("nextBtn").style.display = "none";
+      const total = shuffledQuestions.length;
+      const percent = (score / total) * 100;
+      const resultDiv = document.getElementById("result");
+      if (percent >= 70) {
+        resultDiv.innerHTML = `🩺 ¡Felicidades Puppet! Luo Binghe está orgulloso. Obtuviste ${score}/${total} (${percent.toFixed(1)}%)`;
+        resultDiv.style.backgroundColor = "#c8e6c9";
+      } else {
+        resultDiv.innerHTML = `🚨 ¡Hay tabla, Puppet! Solo sacaste ${score}/${total} (${percent.toFixed(1)}%)`;
+        resultDiv.style.backgroundColor = "#ffcdd2";
+      }
+    }
+
+    shuffledQuestions = shuffleArray([...questions]).slice(0, 20);
+    showQuestion();
+  </script>
+</body>
+</html>
