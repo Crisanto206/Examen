@@ -6,16 +6,16 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #e0f7fa; /* fondo azul claro estilo médico */
+      background: #e0f7fa;
       padding: 20px;
     }
     h1 {
-      color: #00695c; /* verde oscuro médico */
+      color: #00695c;
       text-align: center;
     }
     .question {
       background: #ffffff;
-      border: 2px solid #80cbc4; /* borde verde agua */
+      border: 2px solid #80cbc4;
       border-radius: 10px;
       padding: 15px;
       margin-bottom: 20px;
@@ -42,7 +42,7 @@
       border-radius: 10px;
       text-align: center;
     }
-    #nextBtn {
+    #nextBtn, #startBtn {
       background-color: #00796b;
       color: white;
       padding: 10px 20px;
@@ -53,37 +53,84 @@
       display: block;
       margin: 20px auto;
     }
+    select {
+      display: block;
+      margin: 20px auto;
+      font-size: 18px;
+      padding: 10px;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
   <h1>Examen sorpresa para Puppet 💉🚑</h1>
+
+  <div id="config">
+    <label for="tema" style="text-align:center; display:block; font-size:18px;">Selecciona un tema:</label>
+    <select id="tema">
+      <option value="oseo">Sistema Óseo</option>
+      <option value="linfatico">Sistema Linfático</option>
+      <option value="muscular">Sistema Muscular</option>
+      <option value="nervioso">Sistema Nervioso</option>
+    </select>
+    <button id="startBtn">Iniciar examen</button>
+  </div>
+
   <div id="quiz"></div>
   <div id="result"></div>
   <button id="nextBtn" style="display:none">Siguiente pregunta</button>
 
   <script>
-    const questions = [
-  { q: "¿Cuáles son los principales componentes del sistema óseo?", options: ["Músculos, ligamentos y tendones", "Huesos, cartílagos y articulaciones", "Piel, cabello y uñas", "Células sanguíneas y hormonas"], answer: 1 },
-  { q: "¿Cuántos huesos tiene el esqueleto humano adulto?", options: ["180", "200", "206", "220"], answer: 2 },
-  { q: "¿Qué estructura del esqueleto protege el cerebro?", options: ["Caja torácica", "Columna vertebral", "Cráneo", "Pelvis"], answer: 2 },
-  { q: "¿Qué función cumplen los ligamentos y tendones?", options: ["Producción de calcio", "Almacenamiento de grasas", "Unión de huesos y músculos", "Digestión de proteínas"], answer: 2 },
-  { q: "¿Cuántas son las funciones principales del sistema linfático?", options: ["3", "1", "5"], answer: 0 },
-  { q: "¿Cuál NO es una función del sistema linfático?", options: ["Drenar líquidos", "Transportar grasas", "Transportar glóbulos rojos"], answer: 2 },
-  { q: "¿Qué estructuras se encuentran en los vasos linfáticos?", options: ["Ganglios linfáticos", "Leucocitos", "Linfa"], answer: 0 },
-  { q: "¿Qué líquido recoge el exceso de fluidos del espacio intersticial?", options: ["Linfa", "Agua", "Plasma"], answer: 0 },
-  { q: "¿Qué pasa si no se drena bien la linfa?", options: ["Moretones", "Linfedema", "Linfacitis"], answer: 1 },
-  { q: "¿Qué es el sistema linfático?", options: ["Un sistema de órganos que protege contra enfermedades", "Sirve para bombear sangre", "Sirve para no enfermarse de tos"], answer: 0 },
-  { q: "¿Qué es la linfa?", options: ["Líquido con glóbulos blancos y grasas", "Un aparato médico", "Un medicamento"], answer: 0 },
-  { q: "¿De qué está compuesto el sistema linfático?", options: ["Vasos, ganglios, timo y bazo", "Amígdalas y médula ósea", "Todas las anteriores"], answer: 2 },
-  { q: "¿Cómo se activa el sistema linfático?", options: ["Ejercicio y alimentación saludable", "Presionando un botón", "Ejercicios motrices"], answer: 0 },
-  { q: "¿Qué es el sistema muscular?", options: ["Fibras y tejidos", "Huesos y articulaciones", "Nervios y tendones"], answer: 0 },
-  { q: "¿Cuáles son los músculos cardiacos?", options: ["Músculos del abdomen", "Músculos de las extremidades", "Músculos de la pared del corazón"], answer: 2 },
-  { q: "¿Cuál es una enfermedad de los músculos?", options: ["Artritis", "Desgarros", "Fiebre reumática"], answer: 1 },
-  { q: "¿En qué se divide el sistema nervioso central?", options: ["Encéfalo y Médula Espinal", "Cervical y Torácico", "Cerebro Central y Posterior"], answer: 0 },
-  { q: "¿En qué se divide el sistema nervioso periférico?", options: ["Somático y Autónomo", "Meninges y cuerpo torácico", "Hemisferios"], answer: 0 },
-  { q: "¿Los pares craneales son 12 con funciones sensoriales, motoras y mixtas?", options: ["Falso", "Verdadero"], answer: 1 },
-  { q: "¿El sistema nervioso simpático se activa en emergencias?", options: ["Falso", "Verdadero"], answer: 1 }
-];
+    const bancos = {
+  oseo: [
+    { q: "¿Cuáles son los principales componentes del sistema óseo?", options: ["Músculos, ligamentos y tendones", "Huesos, cartílagos y articulaciones", "Piel, cabello y uñas", "Células sanguíneas y hormonas"], answer: 1 },
+    { q: "¿Cuántos huesos tiene el esqueleto humano en la edad adulta?", options: ["180", "200", "206", "220"], answer: 2 },
+    { q: "¿Cuál es una de las funciones principales del sistema óseo?", options: ["Digestión", "Temperatura", "Energía", "Soporte estructural"], answer: 3 },
+    { q: "¿Qué estructura protege el cerebro?", options: ["Caja torácica", "Columna vertebral", "Cráneo", "Pelvis"], answer: 2 },
+    { q: "¿Qué función cumplen ligamentos y tendones?", options: ["Producción de calcio", "Unión de huesos y músculos", "Almacenamiento de grasas", "Digestión"], answer: 1 },
+    { q: "¿Qué tipo de tejido forma los huesos?", options: ["Tejido muscular", "Tejido óseo", "Tejido nervioso", "Tejido epitelial"], answer: 1 },
+    { q: "¿Cómo se llama la célula que forma hueso nuevo?", options: ["Osteocito", "Condrocito", "Osteoblasto", "Fibroblasto"], answer: 2 },
+    { q: "¿Qué parte del hueso almacena médula ósea?", options: ["Periostio", "Epífisis", "Corteza", "Cavidad medular"], answer: 3 },
+    { q: "¿Qué sustancia se almacena en los huesos además del calcio?", options: ["Grasa", "Azúcar", "Vitamina C", "Proteína"], answer: 0 },
+    { q: "¿Cuál es el hueso más largo del cuerpo humano?", options: ["Húmero", "Radio", "Fémur", "Tibia"], answer: 2 }
+  ],
+  linfatico: [
+    { q: "¿Cuántas son las funciones del sistema linfático?", options: ["3", "1", "5"], answer: 0 },
+    { q: "Funciones del sistema linfático", options: ["Drenar energía...", "Transportar glóbulos rojos...", "Drenar líquidos, transportar grasas, inmunidad"], answer: 2 },
+    { q: "Estructuras en vasos linfáticos", options: ["Ganglios", "Leucocitos", "Linfa"], answer: 0 },
+    { q: "¿Qué es la linfa?", options: ["Líquido con glóbulos blancos", "Aparato médico", "Medicamento"], answer: 0 },
+    { q: "¿Qué pasa si no se drena la linfa?", options: ["Linfedema", "Moretones", "Linfacitis"], answer: 0 },
+    { q: "¿Qué son los ganglios linfáticos?", options: ["Células de defensa", "Órganos ovalados que filtran la linfa", "Músculos del cuello"], answer: 1 },
+    { q: "¿Qué sistema colabora con el sistema linfático en la defensa del cuerpo?", options: ["Digestivo", "Nervioso", "Inmunológico"], answer: 2 },
+    { q: "¿Cuál es una patología del sistema linfático?", options: ["Linfoma", "Artritis", "Hipoglucemia"], answer: 0 },
+    { q: "¿Qué componente del sistema linfático se encarga de madurar linfocitos T?", options: ["Bazo", "Timo", "Hígado"], answer: 1 },
+    { q: "¿Qué órgano linfático también filtra sangre?", options: ["Bazo", "Páncreas", "Estómago"], answer: 0 }
+  ],
+  muscular: [
+    { q: "¿Qué es el sistema muscular?", options: ["Fibras y tejidos", "Huesos", "Nervios"], answer: 0 },
+    { q: "¿Cuáles son los músculos cardiacos?", options: ["Abdomen", "Extremidades", "Pared del corazón"], answer: 2 },
+    { q: "¿Cuál es una enfermedad muscular?", options: ["Artritis", "Desgarros", "Fiebre reumática"], answer: 1 },
+    { q: "¿Qué tipo de músculo se encuentra en el corazón?", options: ["Estriado", "Cardiaco", "Liso", "Voluntario"], answer: 1 },
+    { q: "¿Cuál es la función principal del sistema muscular?", options: ["Digestión", "Movimiento", "Filtración", "Respiración"], answer: 1 },
+    { q: "¿Cuál es un músculo voluntario?", options: ["Estómago", "Bíceps", "Intestino", "Corazón"], answer: 1 },
+    { q: "¿Qué tipo de músculo actúa sin control consciente?", options: ["Liso", "Estriado", "Voluntario", "Tónico"], answer: 0 },
+    { q: "¿Qué une los músculos a los huesos?", options: ["Ligamentos", "Cartílagos", "Tendones", "Articulaciones"], answer: 2 },
+    { q: "¿Qué músculo permite cerrar los ojos?", options: ["Masetero", "Orbicular del ojo", "Pectoral mayor", "Trapecio"], answer: 1 },
+    { q: "¿Cuál es el músculo más largo del cuerpo?", options: ["Bíceps femoral", "Sartorio", "Recto anterior", "Gemelo"], answer: 1 }
+  ],
+  nervioso: [
+    { q: "¿Qué regula el cuerpo en emergencias?", options: ["Sistema simpático", "Parasimpático", "Somático"], answer: 0 },
+    { q: "¿En qué se divide el SNC?", options: ["Encéfalo y médula espinal", "Cervical", "Cerebro central"], answer: 0 },
+    { q: "¿Qué cubren las meninges?", options: ["Huesos", "Cerebro", "Órganos"], answer: 1 },
+    { q: "¿El sistema simpático se activa en emergencias?", options: ["Falso", "Verdadero"], answer: 1 },
+    { q: "¿Cuál es el objetivo del sistema nervioso?", options: ["Producir energía", "Controlar el cuerpo", "Digestion"], answer: 1 },
+    { q: "¿Qué parte del SNC controla las funciones vitales básicas?", options: ["Cerebelo", "Médula espinal", "Tronco encefálico"], answer: 2 },
+    { q: "¿Cuántos pares craneales hay?", options: ["10", "12", "14", "16"], answer: 1 },
+    { q: "¿Cuál es la función del sistema nervioso periférico?", options: ["Enviar señales al encéfalo", "Producir hormonas", "Regular digestión"], answer: 0 },
+    { q: "¿Qué controla el sistema parasimpático?", options: ["Emergencias", "Relajación y descanso", "Movimiento muscular"], answer: 1 },
+    { q: "¿Qué neuronas transmiten impulsos hacia el SNC?", options: ["Motoras", "Sensoriales", "Interneuronas"], answer: 1 }
+  ]
+};
 
     let currentQuestion = 0;
     let score = 0;
@@ -96,6 +143,13 @@
       }
       return array;
     }
+
+    document.getElementById("startBtn").onclick = () => {
+      const tema = document.getElementById("tema").value;
+      shuffledQuestions = shuffleArray([...bancos[tema]]).slice(0, 10);
+      document.getElementById("config").style.display = "none";
+      showQuestion();
+    };
 
     function showQuestion() {
       const quizDiv = document.getElementById("quiz");
@@ -153,9 +207,7 @@
         resultDiv.style.backgroundColor = "#ffcdd2";
       }
     }
-
-    shuffledQuestions = shuffleArray([...questions]).slice(0, 20);
-    showQuestion();
   </script>
 </body>
 </html>
+
