@@ -68,6 +68,9 @@
   <div id="config">
     <label for="tema" style="text-align:center; display:block; font-size:18px;">Selecciona un tema:</label>
     <select id="tema">
+      <option value="digestivo">Sistema Digestivo</option>
+      <option value="urinario">Sistema Urinario</option>
+      <option value="reproductor">Sistema Reproductor</option>
       <option value="oseo">Sistema Óseo</option>
       <option value="linfatico">Sistema Linfático</option>
       <option value="muscular">Sistema Muscular</option>
@@ -82,53 +85,51 @@
 
   <script>
     const bancos = {
+  urinario: [
+    { q: "El aparato urinario elimina de la sangre un tipo de desecho llamado:", options: ["Nefronas", "Urea", "Glomérulos"], answer: 1 },
+    { q: "¿Qué son las nefronas?", options: ["Unidades minúsculas de filtrado", "Uréteres", "Micción"], answer: 0 },
+    { q: "¿Cómo llega la urea a los riñones?", options: ["Túbulo renal", "Torrente sanguíneo", "Nefronas"], answer: 1 },
+    { q: "¿Cómo llega la orina a la vejiga?", options: ["Uretra", "Esfínter", "Uréteres"], answer: 2 },
+    { q: "¿Qué órganos componen el sistema urinario?", options: ["Riñones, uréteres, vejiga, esfínter, uretra", "Intestino, vejiga, uretra", "Uréteres, uretra, próstata"], answer: 0 }
+  ],
+  reproductor: [
+    { q: "¿Cuáles son las partes que conforman el sistema reproductor femenino?", options: ["Cuello uterino, pene, glande y periné.", "Testículos, próstata, trompas de Felipe, monte venus", "Monte venus, vulva, clítoris, labios mayores, labios menores, vagina, útero, trompas de falopio, ovarios, cuello uterino (cérvix)"], answer: 2 },
+    { q: "¿Cómo se divide el órgano reproductor femenino?", options: ["En dos, parte externa e interna.", "En tres, vulva, parte externa y parte Interna.", "Es uno solo."], answer: 0 },
+    { q: "¿Cuáles son las partes del sistema reproductor masculino?", options: ["No tiene, es una sola unión.", "Pene, glande y periné.", "Testículos, conducto deferente, epidídimo, pene, vesículas seminales y próstata."], answer: 2 },
+    { q: "¿Cómo se divide el sistema reproductor masculino?", options: ["En partes internas, externas y glándulas", "Solo externas", "No se divide"], answer: 0 },
+    { q: "¿Cuáles son las hormonas principales en el aparato reproductor?", options: ["F= Estrógeno y progesterona, M= Andrógenos (testosterona, androsterona, androstenediona)", "Testosterona, clembuterol, paracetamol y progesterona", "Progesterona, insulina, testosterona, melatonina"], answer: 0 }
+  ],
+  digestivo: [
+    { q: "¿Cuántas y cuáles son las partes del intestino delgado?", options: ["Son dos, ileon y león.", "Son 4 estómago, duodeno , yeyuno y ayuno.", "Se divide en 3 secciones, duodeno, yeyuno e íleon", "En 3 secciones."], answer: 2 },
+    { q: "¿En dónde inicia el sistema digestivo?", options: ["En la boca", "En el ano", "En el intestino delgado y de ahí pasa al intestino grueso.", "En el estómago."], answer: 0 },
+    { q: "¿Cuáles son los pasos del proceso digestivo?", options: ["Ingestión, Absorción, Eliminación", "Ingestión, propulsión, degradación mecánica, digestión química, absorción, eliminación.", "Ingestión y eliminación.", "No lleva un proceso, ni que tuviéramos procesador."], answer: 1 },
+    { q: "¿Cuáles son funciones del sistema digestivo?", options: ["Descomponer los alimentos, absorber los nutrientes y eliminar los desechos.", "Absorber alimentos para mantener el cuerpo sano.", "Eliminar desechos.", "Todos los anteriores."], answer: 0 }
+  ],
   oseo: [
     { q: "¿Cuáles son los principales componentes del sistema óseo?", options: ["Músculos, ligamentos y tendones", "Huesos, cartílagos y articulaciones", "Piel, cabello y uñas", "Células sanguíneas y hormonas"], answer: 1 },
     { q: "¿Cuántos huesos tiene el esqueleto humano en la edad adulta?", options: ["180", "200", "206", "220"], answer: 2 },
-    { q: "¿Cuál es una de las funciones principales del sistema óseo?", options: ["Digestión", "Temperatura", "Energía", "Soporte estructural"], answer: 3 },
-    { q: "¿Qué estructura protege el cerebro?", options: ["Caja torácica", "Columna vertebral", "Cráneo", "Pelvis"], answer: 2 },
-    { q: "¿Qué función cumplen ligamentos y tendones?", options: ["Producción de calcio", "Unión de huesos y músculos", "Almacenamiento de grasas", "Digestión"], answer: 1 },
-    { q: "¿Qué tipo de tejido forma los huesos?", options: ["Tejido muscular", "Tejido óseo", "Tejido nervioso", "Tejido epitelial"], answer: 1 },
-    { q: "¿Cómo se llama la célula que forma hueso nuevo?", options: ["Osteocito", "Condrocito", "Osteoblasto", "Fibroblasto"], answer: 2 },
-    { q: "¿Qué parte del hueso almacena médula ósea?", options: ["Periostio", "Epífisis", "Corteza", "Cavidad medular"], answer: 3 },
-    { q: "¿Qué sustancia se almacena en los huesos además del calcio?", options: ["Grasa", "Azúcar", "Vitamina C", "Proteína"], answer: 0 },
-    { q: "¿Cuál es el hueso más largo del cuerpo humano?", options: ["Húmero", "Radio", "Fémur", "Tibia"], answer: 2 }
-  ],
-  linfatico: [
-    { q: "¿Cuántas son las funciones del sistema linfático?", options: ["3", "1", "5"], answer: 0 },
-    { q: "Funciones del sistema linfático", options: ["Drenar energía...", "Transportar glóbulos rojos...", "Drenar líquidos, transportar grasas, inmunidad"], answer: 2 },
-    { q: "Estructuras en vasos linfáticos", options: ["Ganglios", "Leucocitos", "Linfa"], answer: 0 },
-    { q: "¿Qué es la linfa?", options: ["Líquido con glóbulos blancos", "Aparato médico", "Medicamento"], answer: 0 },
-    { q: "¿Qué pasa si no se drena la linfa?", options: ["Linfedema", "Moretones", "Linfacitis"], answer: 0 },
-    { q: "¿Qué son los ganglios linfáticos?", options: ["Células de defensa", "Órganos ovalados que filtran la linfa", "Músculos del cuello"], answer: 1 },
-    { q: "¿Qué sistema colabora con el sistema linfático en la defensa del cuerpo?", options: ["Digestivo", "Nervioso", "Inmunológico"], answer: 2 },
-    { q: "¿Cuál es una patología del sistema linfático?", options: ["Linfoma", "Artritis", "Hipoglucemia"], answer: 0 },
-    { q: "¿Qué componente del sistema linfático se encarga de madurar linfocitos T?", options: ["Bazo", "Timo", "Hígado"], answer: 1 },
-    { q: "¿Qué órgano linfático también filtra sangre?", options: ["Bazo", "Páncreas", "Estómago"], answer: 0 }
+    { q: "¿Cuál es una de las funciones principales del sistema óseo?", options: ["Digestión de alimentos", "Regulación de la temperatura", "Producción de energía", "Soporte estructural del cuerpo"], answer: 3 },
+    { q: "¿Qué estructura del esqueleto protege el cerebro y los órganos sensoriales?", options: ["Caja torácica", "Columna vertebral", "Cráneo", "Pelvis"], answer: 2 },
+    { q: "¿Qué función cumplen los ligamentos y los tendones en el sistema óseo?", options: ["Producción de calcio", "Almacenamiento de grasas", "Unión de huesos y músculos", "Digestión de proteínas"], answer: 2 }
   ],
   muscular: [
-    { q: "¿Qué es el sistema muscular?", options: ["Fibras y tejidos", "Huesos", "Nervios"], answer: 0 },
-    { q: "¿Cuáles son los músculos cardiacos?", options: ["Abdomen", "Extremidades", "Pared del corazón"], answer: 2 },
-    { q: "¿Cuál es una enfermedad muscular?", options: ["Artritis", "Desgarros", "Fiebre reumática"], answer: 1 },
-    { q: "¿Qué tipo de músculo se encuentra en el corazón?", options: ["Estriado", "Cardiaco", "Liso", "Voluntario"], answer: 1 },
-    { q: "¿Cuál es la función principal del sistema muscular?", options: ["Digestión", "Movimiento", "Filtración", "Respiración"], answer: 1 },
-    { q: "¿Cuál es un músculo voluntario?", options: ["Estómago", "Bíceps", "Intestino", "Corazón"], answer: 1 },
-    { q: "¿Qué tipo de músculo actúa sin control consciente?", options: ["Liso", "Estriado", "Voluntario", "Tónico"], answer: 0 },
-    { q: "¿Qué une los músculos a los huesos?", options: ["Ligamentos", "Cartílagos", "Tendones", "Articulaciones"], answer: 2 },
-    { q: "¿Qué músculo permite cerrar los ojos?", options: ["Masetero", "Orbicular del ojo", "Pectoral mayor", "Trapecio"], answer: 1 },
-    { q: "¿Cuál es el músculo más largo del cuerpo?", options: ["Bíceps femoral", "Sartorio", "Recto anterior", "Gemelo"], answer: 1 }
+    { q: "¿Qué es el sistema muscular?", options: ["Fibras y tejidos", "Huesos y articulaciones", "Nervios y tendones"], answer: 0 },
+    { q: "¿Cuáles son los músculos cardiacos?", options: ["Los que protegen las paredes internas del abdomen", "Los que permiten el desplazamiento de las extremidades", "Los músculos de la pared del corazón"], answer: 2 },
+    { q: "¿Cuál de las siguientes es una enfermedad de los músculos?", options: ["Artritis", "Desgarros", "Fiebre reumática"], answer: 1 }
   ],
   nervioso: [
-    { q: "¿Qué regula el cuerpo en emergencias?", options: ["Sistema simpático", "Parasimpático", "Somático"], answer: 0 },
-    { q: "¿En qué se divide el SNC?", options: ["Encéfalo y médula espinal", "Cervical", "Cerebro central"], answer: 0 },
-    { q: "¿Qué cubren las meninges?", options: ["Huesos", "Cerebro", "Órganos"], answer: 1 },
-    { q: "¿El sistema simpático se activa en emergencias?", options: ["Falso", "Verdadero"], answer: 1 },
-    { q: "¿Cuál es el objetivo del sistema nervioso?", options: ["Producir energía", "Controlar el cuerpo", "Digestion"], answer: 1 },
-    { q: "¿Qué parte del SNC controla las funciones vitales básicas?", options: ["Cerebelo", "Médula espinal", "Tronco encefálico"], answer: 2 },
-    { q: "¿Cuántos pares craneales hay?", options: ["10", "12", "14", "16"], answer: 1 },
-    { q: "¿Cuál es la función del sistema nervioso periférico?", options: ["Enviar señales al encéfalo", "Producir hormonas", "Regular digestión"], answer: 0 },
-    { q: "¿Qué controla el sistema parasimpático?", options: ["Emergencias", "Relajación y descanso", "Movimiento muscular"], answer: 1 },
-    { q: "¿Qué neuronas transmiten impulsos hacia el SNC?", options: ["Motoras", "Sensoriales", "Interneuronas"], answer: 1 }
+    { q: "El sistema nervioso central se divide en 2:", options: ["Encéfalo y Médula Espinal", "Cervical y Torácico", "Cerebro Central y Posterior"], answer: 0 },
+    { q: "El sistema nervioso periférico se divide en 2:", options: ["Sistema nervioso somático y autónomo", "Meninges y cuerpo torácico", "Hemisferio izquierdo y derecho"], answer: 0 },
+    { q: "Los pares craneales son 12 y tienen las siguientes funciones sensoriales, motoras y mixtas:", options: ["Falso", "Verdadero"], answer: 1 },
+    { q: "Las meninges con membranas que cubren el cerebro.", options: ["Falso", "Verdadero"], answer: 1 },
+    { q: "El sistema nervioso simpático regula la actividad del cuerpo en emergencias.", options: ["Falso", "Verdadero"], answer: 1 }
+  ],
+  linfatico: [
+    { q: "¿Qué es el sistema linfático?", options: ["Es un sistema de órganos que ayuda a proteger el cuerpo de enfermedades e infecciones", "Sirve para bombear sangre al corazón", "Sirve para no enfermarse de tos"], answer: 0 },
+    { q: "¿Qué es linfa?", options: ["Es un líquido transparente y blanquecino compuesto de glóbulos blancos y quilo que contiene proteínas y grasas", "Es un aparato medico", "Es para fortalecer el sistema inmunológico"], answer: 0 },
+    { q: "¿De qué está compuesto el sistema linfático?", options: ["Vasos linfáticos, ganglios linfáticos, timo y bazo", "Amígdalas y médula ósea", "Todas las anteriores"], answer: 2 },
+    { q: "¿Qué son las patologías del sistema linfático?", options: ["Linfedema y linfonia", "Linfacitis", "Todas las anteriores"], answer: 2 },
+    { q: "¿Cómo se activa el sistema linfático?", options: ["Ejercicio, buena alimentación, agua, cúrcuma, ajo, cítricos", "Presionando un botón", "Ejercicios motrices"], answer: 0 }
   ]
 };
 
@@ -210,4 +211,3 @@
   </script>
 </body>
 </html>
-
